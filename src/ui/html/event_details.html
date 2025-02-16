@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/event_details.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Event Details - Evently</title>
+  </head>
+  <body>
+    <header>
+      <div class="header_container">
+        <div class="header_title"><a href="/main">Evently</a></div>
+        <button class="header_button" onclick="location.href='/createEvent'">
+          Create Event
+        </button>
+      </div>
+    </header>
+    <main>
+      <div class="container">
+        <h1 class="event_name" id="event-name">Event Name</h1>
+        <div class="container_inner">
+          <div class="event_content">
+            <label for="event-description">Description</label>
+            <p id="event-description">This is the description of the event.</p>
+            <button id="invite-btn">Invite Users</button>
+            <button class="delete-event" id="delete-btn">Delete Event</button>
+          </div>
+          <div class="event_aside">
+            <p>
+              <label for="event-date">Date</label>
+              <span id="event-date">01/01/2025</span>
+            </p>
+            <p>
+              <label for="event-location">Location</label>
+              <span id="event-location">New York, USA</span>
+            </p>
+            <p>
+              <label>Time remaining:</label>
+              <span id="time-remaining"></span>
+            </p>
+            <!-- Раздел для голосования за время проведения -->
+            <div class="voting-section">
+              <h2>Vote for the time of the event</h2>
+              <form id="vote-form">
+                <label>
+                  <input type="radio" name="eventTime" value="10:00" /> 10:00 AM
+                </label>
+                <label>
+                  <input type="radio" name="eventTime" value="12:00" /> 12:00 PM
+                </label>
+                <label>
+                  <input type="radio" name="eventTime" value="14:00" /> 2:00 PM
+                </label>
+                <label>
+                  <input type="radio" name="eventTime" value="16:00" /> 4:00 PM
+                </label>
+                <label>
+                  <input type="radio" name="eventTime" value="18:00" /> 6:00 PM
+                </label>
+                <button type="submit">Vote</button>
+              </form>
+              <div id="vote-results"></div>
+            </div>
+          </div>
+        </div>
+        <div id="qr-container" style="display: none">
+          <label>Share this link:</label>
+          <input
+            type="text"
+            id="event-link"
+            value="www.evently.com/event"
+            readonly
+          />
+          <img id="qr-code" src="qr-code-placeholder.png" alt="QR Code" />
+        </div>
+      </div>
+    </main>
+
+    <script src="../js/event_details.js"></script>
+  </body>
+</html>

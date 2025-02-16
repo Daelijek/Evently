@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration</title>
+    <link rel="stylesheet" href="../css/registration.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="form_container">
+        <div class="form_title">Sign up</div>
+        <form id="register-form">
+          <input type="email" id="email" placeholder="Email" required />
+          <input type="text" id="name" placeholder="Name" required />
+          <input type="text" id="surname" placeholder="Surname" required />
+          <input
+            title="Date of birth"
+            type="date"
+            id="date-of-birth"
+            placeholder="Date of birth"
+            required
+          />
+          <input
+            type="text"
+            id="phone-number"
+            placeholder="Phone number"
+            required
+          />
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            required
+          />
+          <button type="submit">Sign up</button>
+        </form>
+        <p>Already have account? <a href="/login">Log in</a>.</p>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("register-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const email = document.getElementById("email").value;
+          const name = document.getElementById("name").value;
+          const surname = document.getElementById("surname").value;
+          const dateOfBirth = document.getElementById("date-of-birth").value;
+          const phoneNumber = document.getElementById("phone-number").value;
+          const password = document.getElementById("password").value;
+
+          try {
+            const response = await fetch("http://localhost:3000/register", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                email,
+                name,
+                surname,
+                dateOfBirth,
+                phoneNumber,
+                password,
+              }),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+              alert(data.message);
+              window.location.href = "/login"; // Перенаправление на страницу входа
+            } else {
+              alert(data.error);
+            }
+          } catch (error) {
+            console.error(error);
+            alert("Ошибка сервера");
+          }
+        });
+    </script>
+  </body>
+</html>

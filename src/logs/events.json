@@ -1,0 +1,51 @@
+[
+  {
+    "id": "1738261217332",
+    "name": "Dora in Almaty",
+    "description": "Dora is a simple girl from Saratov, who once found the strength to sincerely share what was on her mind. Problems in relationships, not mutual love and the desire to realize themselves that's what worried Dasha then, and, as it turned out, not only her. The songs quickly resonated with millions of listeners and became global hits.\n\nToday, Dora is the creator of her unique \"cut rock\" style, adorns banners in Times Square in New York, makes joint hits with the mastodons of Russian rap, but remains as open and honest. Dora will perform a big solo concert for you, where she will perform all the hits, from \"Fell in Love\" to \"San Laurent\", with live musical instruments.\n\nDora has more than 5 million subscribers on her social networks, and her major hits are receiving tens of millions of listens on streaming platforms.",
+    "date": "2025-02-15",
+    "location": "Almaty, Motor Club"
+  },
+  {
+    "id": "1738261783619",
+    "name": "Hoon's Birthday",
+    "description": "Join us for a fun-filled celebration as we mark Hoon's special day! Enjoy an evening of laughter, music, and delicious food, as we celebrate another year of great memories and friendship. The party will feature games, a photo booth, and a special birthday cake! It's an event you won't want to miss, so bring your best party spirit and let's make Hoon's birthday unforgettable!",
+    "date": "2025-02-01",
+    "location": "Dump"
+  },
+  {
+    "id": "1738261970404",
+    "name": "TechTalk: The Future of AI",
+    "description": "Join us for an exciting conference where AI experts share their knowledge about the latest advancements and predictions for the future. Dive into discussions on ethical issues, technological developments, and their impact on various aspects of life. Perfect for tech enthusiasts who want to stay ahead of the curve!",
+    "date": "2025-02-09",
+    "location": "Astana, Astana HUB"
+  },
+  {
+    "id": "1738262014908",
+    "name": "Outdoor Adventure Challenge",
+    "description": "Ready to take on a challenge? Join our outdoor adventure event, featuring cross-country running, team-building activities, and more! It’s the perfect event for those who love active recreation, nature, and teamwork.",
+    "date": "2025-03-08",
+    "location": "Greenfield Park, 2000 Park Road"
+  },
+  {
+    "id": "1738262045716",
+    "name": "Art & Wine Night",
+    "description": "Immerse yourself in the world of art and wine at this unique art party! Enjoy a glass of your favorite drink while professional artists lead painting and drawing workshops. Ideal for those who appreciate creativity, good wine, and a relaxed atmosphere.",
+    "date": "2025-02-20",
+    "location": "The Art Gallery, Riverfront Street, Downtown"
+  },
+  {
+    "id": "1738262061807",
+    "name": "Sunset Yoga on the Beach",
+    "description": "Immerse yourself in serenity and peace with beach yoga at sunset. Relax, connect with nature, and enjoy meditation with like-minded individuals. Perfect for those looking to improve their physical and emotional well-being.",
+    "date": "2025-01-31",
+    "location": "Sunset Beach, 456 Ocean Drive"
+  },
+  {
+    "id": "1738262081639",
+    "name": "Cooking Class: Italian Delights",
+    "description": "Join a culinary masterclass where you’ll learn to make authentic Italian dishes. From pasta to desserts, this event will guide you through the art of preparing classic Italian meals. Ideal for food lovers and aspiring chefs.",
+    "date": "2025-03-20",
+    "location": "Bella Cucina Cooking School, 42 Foodie Lane"
+  }
+]

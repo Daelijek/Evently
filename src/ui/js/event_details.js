@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  // Show QR code and invitation link
+  // Show QR code and invitation link (и форму для приглашения)
   inviteBtn.addEventListener("click", () => {
     qrContainer.style.display = "block";
   });
@@ -169,5 +169,52 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     resultsHtml += "</ul>";
     voteResults.innerHTML = resultsHtml;
+  }
+
+  // --- Новый функционал: Отправка приглашения на почту ---
+  // Предполагается, что в HTML внутри блока с id="qr-container" добавлены:
+  // 1. Поле ввода с id="invite-emails" для ввода email-адресов (через запятую)
+  // 2. Кнопка с id="send-invite-btn" для отправки приглашения
+
+  const sendInviteBtn = document.getElementById("send-invite-btn");
+  const inviteEmailsInput = document.getElementById("invite-emails");
+
+  if (sendInviteBtn && inviteEmailsInput) {
+    sendInviteBtn.addEventListener("click", async () => {
+      const emailsValue = inviteEmailsInput.value.trim();
+      if (!emailsValue) {
+        alert("Please enter one or more email addresses.");
+        return;
+      }
+      // Разбиваем строку по запятым и удаляем лишние пробелы
+      const emails = emailsValue
+        .split(",")
+        .map((email) => email.trim())
+        .filter((email) => email);
+      if (emails.length === 0) {
+        alert("Invalid email format.");
+        return;
+      }
+      try {
+        const response = await fetch(
+          `http://localhost:3000/events/${eventId}/invite`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify({ emails }),
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to send invitations.");
+        }
+        alert("Invitations sent successfully!");
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Error sending invitations.");
+      }
+    });
   }
 });

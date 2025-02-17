@@ -16,8 +16,12 @@
   height: 100%;
   /* background: rgb(0,159,141);
   background: linear-gradient(41deg, rgba(0,159,141,0.6895133053221288) 0%, rgba(153,153,153,1) 100%); */
-  background: rgb(175,164,180);
-  background: radial-gradient(circle, rgba(175,164,180,1) 19%, rgba(123,240,234,1) 100%);
+  background: rgb(175, 164, 180);
+  background: radial-gradient(
+    circle,
+    rgba(175, 164, 180, 1) 19%,
+    rgba(123, 240, 234, 1) 100%
+  );
   z-index: -1;
 }
 
@@ -101,4 +105,28 @@ textarea:focus {
   border-color: #03c9b2;
   outline: none;
   box-shadow: 0 0 10px rgba(3, 201, 178, 0.6);
+}
+
+.custom-file-upload {
+  display: inline-block;
+  padding: 8px 16px;
+  cursor: pointer;
+  background-color: #017c6e;
+  color: #fff;
+  border: 1px solid #017c6e;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-right: 10px;
+  transition: 0.3s ease;
+  margin-top: 10px;
+}
+
+.custom-file-upload:hover {
+  background-color: #fff;
+  color: #017c6e;
+}
+
+#file-name {
+  font-size: 14px;
+  color: #555;
 }

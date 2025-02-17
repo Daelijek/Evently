@@ -372,3 +372,39 @@ app.post("/events/:id/vote", isAuthenticated, async (req, res) => {
     res.status(500).json({ error: "Ошибка сервера" });
   }
 });
+
+const { sendInvitationEmail } = require("./mail.js");
+
+app.post("/events/:id/invite", isAuthenticated, async (req, res) => {
+  const { id } = req.params;
+  const { emails } = req.body; // Ожидается массив email-адресов
+
+  if (!emails || !Array.isArray(emails) || emails.length === 0) {
+    return res
+      .status(400)
+      .json({ error: "Please provide at least one email address." });
+  }
+
+  try {
+    // Получаем данные о событии
+    const event = await Event.findById(id);
+    if (!event) {
+      return res.status(404).json({ error: "Event not found" });
+    }
+
+    // Формируем ссылку для перехода к деталям события
+    const inviteLink = `${req.protocol}://${req.get(
+      "host"
+    )}/html/event_details.html?id=${event.id}`;
+
+    // Отправляем приглашение каждому email
+    for (const email of emails) {
+      await sendInvitationEmail(email, event, inviteLink);
+    }
+
+    res.status(200).json({ message: "Invitations sent successfully." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error sending invitations." });
+  }
+});

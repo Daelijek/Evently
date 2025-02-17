@@ -57,10 +57,13 @@
             />
           </div>
           <!-- Поле для загрузки изображения -->
-<div class="input_group">
-  <label for="eImage">Event Image</label>
-  <input type="file" id="eImage" accept="image/*" />
-</div>
+          <div class="input_group">
+            <!-- Кастомная кнопка -->
+            <label for="eImage" class="custom-file-upload">Choose Image</label>
+            <!-- Скрытый input -->
+            <input type="file" id="eImage" name="eImage" accept="image/*" style="display: none;" />
+            <span id="file-name">No file chosen</span>
+          </div>
         </form>
         <button class="form_button" type="submit">Create</button>
       </div>

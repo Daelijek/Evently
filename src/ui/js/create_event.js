@@ -46,3 +46,12 @@ document.querySelector(".form_button").addEventListener("click", async () => {
     alert("Server is unavailable.");
   }
 });
+
+document.getElementById("eImage").addEventListener("change", function () {
+  const fileNameSpan = document.getElementById("file-name");
+  if (this.files && this.files.length > 0) {
+    fileNameSpan.textContent = this.files[0].name;
+  } else {
+    fileNameSpan.textContent = "No file chosen";
+  }
+});

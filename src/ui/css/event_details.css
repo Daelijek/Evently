@@ -160,7 +160,7 @@ label {
 #vote-form {
   display: flex;
   flex-direction: column;
-  align-items: start;  
+  align-items: start;
 }
 
 #vote-form button {
@@ -176,6 +176,33 @@ label {
 }
 
 #vote-form button:hover {
+  background-color: #fff;
+  color: #017c6e;
+}
+
+.invite-form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+#invite-emails {
+  width: 100%;
+}
+
+#send-invite-btn {
+  padding: 12px 20px;
+  border: 2px solid #017c6e;
+  background-color: #017c6e;
+  color: #fff;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.3s ease;
+  margin-right: 15px;
+  width: 25%;
+}
+
+#send-invite-btn:hover {
   background-color: #fff;
   color: #017c6e;
 }

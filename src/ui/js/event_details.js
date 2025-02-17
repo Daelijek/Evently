@@ -43,6 +43,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     eventDate.textContent = new Date(event.date).toLocaleDateString();
     eventLocation.textContent = event.location;
 
+    // Если сервер вернул populated поле userId с именем организатора:
+    const organizerElement = document.getElementById("event-organizer");
+    if (event.userId && typeof event.userId === "object" && event.userId.name) {
+      organizerElement.textContent = event.userId.name;
+    } else {
+      // Если нет, можно попробовать взять данные из сессии (например, через GET /me)
+      organizerElement.textContent = "Неизвестно";
+    }
+
     // Генерация ссылки на мероприятие
     const eventUrl = `${window.location.origin}/html/event_details.html?id=${eventId}`;
     eventLink.value = eventUrl;

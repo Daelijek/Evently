@@ -115,7 +115,12 @@ app.get("/events/:id", isAuthenticated, async (req, res) => {
   const { id } = req.params;
 
   try {
-    const event = await Event.findOne({ _id: id, userId: req.session.user.id });
+    // Популяция поля userId, чтобы вернуть имя организатора
+    const event = await Event.findOne({
+      _id: id,
+      userId: req.session.user.id,
+    }).populate("userId", "name");
+
     if (!event) {
       return res.status(404).json({ error: "Событие не найдено" });
     }

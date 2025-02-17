@@ -156,10 +156,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   function displayVoteResults(votes) {
-    let resultsHtml = "<h3>Результаты голосования:</h3><ul>";
+    let resultsHtml = "<h3>Voting results:</h3><ul>";
     // votes приходит в виде объекта { "10:00": 3, "12:00": 5, ... }
     for (const time in votes) {
-      resultsHtml += `<li>${time}: ${votes[time]} голос(ов)</li>`;
+      resultsHtml += `<li>${time}: ${votes[time]} voice(s)</li>`;
     }
     resultsHtml += "</ul>";
     voteResults.innerHTML = resultsHtml;

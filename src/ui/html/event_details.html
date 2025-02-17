@@ -27,10 +27,16 @@
         <h1 class="event_name" id="event-name">Event Name</h1>
         <div class="container_inner">
           <div class="event_content">
-            <label for="event-description">Description</label>
-            <p id="event-description">This is the description of the event.</p>
-            <button id="invite-btn">Invite Users</button>
-            <button class="delete-event" id="delete-btn">Delete Event</button>
+            <div class="event_descr">
+              <label for="event-description">Description</label>
+              <p id="event-description">
+                This is the description of the event.
+              </p>
+            </div>
+            <div class="event_content_button">
+              <button id="invite-btn">Invite Users</button>
+              <button class="delete-event" id="delete-btn">Delete Event</button>
+            </div>
           </div>
           <div class="event_aside">
             <p>
@@ -74,14 +80,16 @@
             </div>
           </div>
         </div>
-        <div id="qr-container" style="display: none">
-          <label>Share this link:</label>
-          <input
-            type="text"
-            id="event-link"
-            value="www.evently.com/event"
-            readonly
-          />
+        <div class="invite" id="qr-container" style="display: none">
+          <div class="link">
+            <label>Share this link:</label>
+            <input
+              type="text"
+              id="event-link"
+              value="www.evently.com/event"
+              readonly
+            />
+          </div>
           <img id="qr-code" src="qr-code-placeholder.png" alt="QR Code" />
         </div>
       </div>

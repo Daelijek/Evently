@@ -1,4 +1,10 @@
 document.querySelector(".form_button").addEventListener("click", async () => {
+  const eName = document.getElementById("eName").value.trim();
+  const description = document.getElementById("description").value.trim();
+  const date = document.getElementById("start").value;
+  const location = document.getElementById("eLocation").value.trim();
+  const imageInput = document.getElementById("eImage");
+  const imageFile = imageInput.files[0];
   const eventData = {
     name: document.getElementById("eName").value.trim(),
     description: document.getElementById("description").value.trim(),
@@ -7,19 +13,27 @@ document.querySelector(".form_button").addEventListener("click", async () => {
   };
 
   // Validation: Ensure required fields are not empty
-  if (!eventData.name || !eventData.date || !eventData.location) {
+  if (!eName || !date || !location) {
     alert("Please fill in all required fields (Name, Date, Location).");
     return;
+  }
+
+  // Создаем FormData для отправки файла
+  const formData = new FormData();
+  formData.append("name", eName);
+  formData.append("description", description);
+  formData.append("date", date);
+  formData.append("location", location);
+
+  if (imageFile) {
+    formData.append("image", imageFile);
   }
 
   try {
     const response = await fetch("http://localhost:3000/events", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include", // Важно: отправляем куки
-      body: JSON.stringify(eventData),
+      credentials: "include",
+      body: formData,
     });
 
     if (response.ok) {

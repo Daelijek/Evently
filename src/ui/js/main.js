@@ -38,16 +38,23 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     events.forEach((event) => {
       const eventElement = eventCardTemplate.content.cloneNode(true);
-
       const eventName = eventElement.querySelector(".event_name");
+      const eventImage = eventElement.querySelector(".event_image");
+    
       eventName.textContent = event.name;
-
+      if (event.imageUrl) {
+        eventImage.src = event.imageUrl; // Устанавливаем путь к изображению
+        eventImage.style.display = "block";
+      } else {
+        eventImage.style.display = "none"; // Скрываем изображение, если его нет
+      }
+    
       const showDetailsButton = eventElement.querySelector(".show-details");
       showDetailsButton.onclick = () => showEventDetails(event.id);
-
+    
       const deleteEventButton = eventElement.querySelector(".delete-event");
       deleteEventButton.onclick = () => deleteEvent(event.id);
-
+    
       container.appendChild(eventElement);
     });
   } catch (error) {

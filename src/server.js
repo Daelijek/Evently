@@ -1,5 +1,6 @@
 const express = require("express");
 const fs = require("fs");
+const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
 const session = require("express-session");
@@ -10,6 +11,12 @@ const { sendSubscriptionEmail } = require("./mail"); // Импортируем �
 
 const app = express();
 const PORT = 3000;
+
+// Ensure the images directory exists
+const IMAGES_DIR = path.join(__dirname, "ui", "img");
+if (!fs.existsSync(IMAGES_DIR)) {
+  fs.mkdirSync(IMAGES_DIR, { recursive: true });
+}
 
 // Middleware
 app.use(express.json());
@@ -36,6 +43,18 @@ app.use(
     cookie: { secure: false }, // Установите `true`, если используете HTTPS
   })
 );
+
+// Configure storage for uploaded files
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, "ui", "img")); // Папка для хранения изображений
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname); // Уникальное имя файла
+  },
+});
+
+const upload = multer({ storage: storage });
 
 // Middleware для статических файлов
 app.use(express.static(path.join(__dirname, "ui")));
@@ -135,26 +154,32 @@ app.get("/events/:id", isAuthenticated, async (req, res) => {
 const Event = require("./models/Event"); // Импортируем модель события
 
 // Маршрут для создания события
-app.post("/events", isAuthenticated, async (req, res) => {
-  const { name, description, date, location } = req.body;
+app.post(
+  "/events",
+  isAuthenticated,
+  upload.single("image"),
+  async (req, res) => {
+    const { name, description, date, location } = req.body;
+    const imageUrl = req.file ? `/img/${req.file.filename}` : null;
 
-  try {
-    // Создаем новое событие с привязкой к пользователю
-    const newEvent = new Event({
-      name,
-      description,
-      date,
-      location,
-      userId: req.session.user.id, // Привязываем событие к текущему пользователю
-    });
+    try {
+      const newEvent = new Event({
+        name,
+        description,
+        date,
+        location,
+        userId: req.session.user.id,
+        imageUrl, // Сохраняем путь к изображению
+      });
 
-    await newEvent.save();
-    res.status(201).json({ message: "Событие успешно создано" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Ошибка сервера" });
+      await newEvent.save();
+      res.status(201).json({ message: "Event created successfully!" });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Server error" });
+    }
   }
-});
+);
 
 // Маршрут для удаления события
 app.delete("/events/:id", isAuthenticated, async (req, res) => {

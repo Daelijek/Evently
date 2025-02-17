@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  // Извлекаем ID события из URL
+  // Extract event ID from URL
   const urlParams = new URLSearchParams(window.location.search);
   const eventId = urlParams.get("id");
 
@@ -9,11 +9,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // Элементы DOM
+  // DOM Elements
   const eventName = document.getElementById("event-name");
   const eventDescription = document.getElementById("event-description");
   const eventDate = document.getElementById("event-date");
   const eventLocation = document.getElementById("event-location");
+  const organizerElement = document.getElementById("event-organizer");
   const inviteBtn = document.getElementById("invite-btn");
   const deleteBtn = document.getElementById("delete-btn");
   const qrContainer = document.getElementById("qr-container");
@@ -24,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const voteResults = document.getElementById("vote-results");
 
   try {
-    // Загружаем данные о событии с сервера
+    // Fetch event data from the server
     const response = await fetch(`http://localhost:3000/events/${eventId}`, {
       method: "GET",
       credentials: "include",
@@ -36,35 +37,33 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const event = await response.json();
 
-    // Заполняем данные о событии на странице
-    eventName.textContent = event.name;
+    // Populate event details on the page
+    eventName.textContent = event.name || "No name provided";
     eventDescription.textContent =
       event.description || "No description provided";
     eventDate.textContent = new Date(event.date).toLocaleDateString();
-    eventLocation.textContent = event.location;
+    eventLocation.textContent = event.location || "Location not specified";
 
-    // Если сервер вернул populated поле userId с именем организатора:
-    const organizerElement = document.getElementById("event-organizer");
+    // Display organizer's name if available
     if (event.userId && typeof event.userId === "object" && event.userId.name) {
       organizerElement.textContent = event.userId.name;
     } else {
-      // Если нет, можно попробовать взять данные из сессии (например, через GET /me)
-      organizerElement.textContent = "Неизвестно";
+      organizerElement.textContent = "Unknown";
     }
 
-    // Генерация ссылки на мероприятие
+    // Generate event link and QR code
     const eventUrl = `${window.location.origin}/html/event_details.html?id=${eventId}`;
     eventLink.value = eventUrl;
     generateQRCode(eventUrl);
 
-    // Таймер до начала события
+    // Countdown timer to event start
     const eventStartDate = new Date(event.date);
     function updateTimer() {
       const now = new Date();
       const diff = eventStartDate - now;
 
       if (diff <= 0) {
-        timeRemainingElement.textContent = "Event has started!";
+        timeRemainingElement.textContent = "The event has started!";
         return;
       }
 
@@ -85,7 +84,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.location.href = "/main";
   }
 
-  // Удаление события
+  // Event deletion handler
   deleteBtn.addEventListener("click", async () => {
     if (!confirm("Are you sure you want to delete this event?")) return;
 
@@ -107,11 +106,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  // Показать QR-код и ссылку приглашения
+  // Show QR code and invitation link
   inviteBtn.addEventListener("click", () => {
     qrContainer.style.display = "block";
   });
 
+  // Generate QR Code
   function generateQRCode(url) {
     const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(
       url
@@ -119,17 +119,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     qrCodeImg.src = qrApiUrl;
   }
 
-  // Обработка голосования
+  // Voting form submission handler
   voteForm.addEventListener("submit", async (e) => {
     e.preventDefault();
+
     const selectedOption = document.querySelector(
       'input[name="eventTime"]:checked'
     );
     if (!selectedOption) {
-      alert("Пожалуйста, выберите время для голосования");
+      alert("Please select a time to vote");
       return;
     }
+
     const voteTime = selectedOption.value;
+
     try {
       const voteResponse = await fetch(
         `http://localhost:3000/events/${eventId}/vote`,
@@ -142,25 +145,28 @@ document.addEventListener("DOMContentLoaded", async () => {
           body: JSON.stringify({ time: voteTime }),
         }
       );
+
       if (!voteResponse.ok) {
         throw new Error("Failed to record vote");
       }
+
       const voteData = await voteResponse.json();
-      voteResults.textContent = "Ваш голос учтён!";
-      // Опционально: выводим обновлённые результаты голосования
+      voteResults.textContent = "Your vote has been recorded!";
       displayVoteResults(voteData.timeVotes);
     } catch (error) {
       console.error("Error:", error);
-      alert("Ошибка при голосовании");
+      alert("Error during voting");
     }
   });
 
+  // Display voting results
   function displayVoteResults(votes) {
-    let resultsHtml = "<h3>Voting results:</h3><ul>";
-    // votes приходит в виде объекта { "10:00": 3, "12:00": 5, ... }
-    for (const time in votes) {
-      resultsHtml += `<li>${time}: ${votes[time]} voice(s)</li>`;
+    let resultsHtml = "<h3>Voting Results:</h3><ul>";
+
+    for (const [time, count] of Object.entries(votes)) {
+      resultsHtml += `<li>${time}: ${count} vote(s)</li>`;
     }
+
     resultsHtml += "</ul>";
     voteResults.innerHTML = resultsHtml;
   }

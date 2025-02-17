@@ -11,7 +11,7 @@ const eventSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    // Храним голоса за время проведения. Ключ – время (строка), значение – количество голосов.
+    imageUrl: { type: String }, // Путь к изображению
     timeVotes: {
       type: Map,
       of: Number,

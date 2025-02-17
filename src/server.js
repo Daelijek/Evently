@@ -159,7 +159,9 @@ app.post(
   isAuthenticated,
   upload.single("image"),
   async (req, res) => {
-    const { name, description, date, location } = req.body;
+    const { name, description, date, location, template } = req.body;
+    const eventTemplate = template || "default";
+
     const imageUrl = req.file ? `/img/${req.file.filename}` : null;
 
     try {
@@ -168,8 +170,9 @@ app.post(
         description,
         date,
         location,
+        imageUrl,
+        template: eventTemplate,
         userId: req.session.user.id,
-        imageUrl, // Сохраняем путь к изображению
       });
 
       await newEvent.save();

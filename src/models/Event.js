@@ -12,6 +12,7 @@ const eventSchema = new mongoose.Schema(
       required: true,
     },
     imageUrl: { type: String }, // Путь к изображению
+    template: { type: String, default: "default" }, // Новое поле для выбранного шаблона
     timeVotes: {
       type: Map,
       of: Number,

@@ -5,12 +5,13 @@ document.querySelector(".form_button").addEventListener("click", async () => {
   const location = document.getElementById("eLocation").value.trim();
   const imageInput = document.getElementById("eImage");
   const imageFile = imageInput.files[0];
-  const eventData = {
-    name: document.getElementById("eName").value.trim(),
-    description: document.getElementById("description").value.trim(),
-    date: document.getElementById("start").value,
-    location: document.getElementById("eLocation").value.trim(),
-  };
+
+  // Если элемент выбора шаблона существует, получаем его значение
+  let template = "default";
+  const templateSelect = document.getElementById("template-select");
+  if (templateSelect) {
+    template = templateSelect.value;
+  }
 
   // Validation: Ensure required fields are not empty
   if (!eName || !date || !location) {
@@ -18,12 +19,13 @@ document.querySelector(".form_button").addEventListener("click", async () => {
     return;
   }
 
-  // Создаем FormData для отправки файла
+  // Создаем FormData для отправки данных (в том числе файла и выбранного шаблона)
   const formData = new FormData();
   formData.append("name", eName);
   formData.append("description", description);
   formData.append("date", date);
   formData.append("location", location);
+  formData.append("template", template); // отправляем выбранный шаблон
 
   if (imageFile) {
     formData.append("image", imageFile);

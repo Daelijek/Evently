@@ -51,6 +51,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       organizerElement.textContent = "Unknown";
     }
 
+    // Применяем премиум-шаблон, если выбран (и не default)
+    if (event.template && event.template !== "default") {
+      const premiumStyles = document.createElement("link");
+      premiumStyles.rel = "stylesheet";
+      // Предполагается, что соответствующий CSS-файл находится в /css/
+      premiumStyles.href = `/css/${event.template}.css`;
+      document.head.appendChild(premiumStyles);
+    }
+
     // Generate event link and QR code
     const eventUrl = `${window.location.origin}/html/event_details.html?id=${eventId}`;
     eventLink.value = eventUrl;
